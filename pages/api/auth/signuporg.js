@@ -11,6 +11,7 @@ var Individual=require('../../../models/Individual')
 export default async function SignupOrg(req, res){
     if(req.method==='POST')
     {    
+        console.log(req.body)
 
     try {
         if (!req.body.email || !req.body.password || !req.body.contact ||  !req.body.organisationId){
@@ -19,7 +20,7 @@ export default async function SignupOrg(req, res){
         {
             //add server side input validation
             initDB() 
-            const regUser =  await Org.findOne({email:{$eq:req.body.email}})
+            const regUser =  await Org.findOne({mailId:{$eq:req.body.email}})
             const pUserAcc = await PendAcc.findOne({email:{$eq:req.body.email}})
             const IndiAcc = await Individual.findOne({email:{$eq:req.body.email}})
             const verifAcc = await VerAcc.findOne({email:{$eq:req.body.email}})
@@ -28,6 +29,7 @@ export default async function SignupOrg(req, res){
             //collection and verified accounts collection
     
             if (regUser || pUserAcc || IndiAcc || verifAcc) {
+                console.log(regUser)
                 /*checking if the user is existing also in the organisation collection and verified accounts collection*/
                 return sendError(res,"Account already exists",11,422)
             }else
@@ -49,6 +51,4 @@ export default async function SignupOrg(req, res){
     {
         return;
     }
-    
-
 }

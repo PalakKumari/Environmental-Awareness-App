@@ -24,7 +24,7 @@ export default NextAuth({
         const userInd = await Individual.findOne({ email: credentials.email });
         console.log(userInd);
         const userOrg = await Organisation.findOne({
-          email: credentials.email,
+          mailID: credentials.email,
         });
         if (userOrg) console.log(userOrg);
         if (!userOrg && !userInd) {
